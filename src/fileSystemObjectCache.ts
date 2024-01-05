@@ -63,7 +63,9 @@ export class FileSystemObjectCache implements ObjectCache {
     )
     const existingCache = await fs.stat(cachePath).catch((_e) => false)
     const expired =
-      staleAfterSeconds && typeof existingCache !== 'boolean' && (+new Date() - +existingCache.mtime) / 1000 > staleAfterSeconds
+      staleAfterSeconds !== undefined &&
+      typeof existingCache !== 'boolean' &&
+      (+new Date() - +existingCache.mtime) / 1000 > staleAfterSeconds
 
     if (!existingCache || expired) {
       // eslint-disable-next-line no-console

@@ -12,5 +12,7 @@ const config: Config.InitialOptions = {
       },
     ],
   },
+  transformIgnorePatterns: ['node_modules'],
+  prettierPath: require.resolve('prettier-2'),
 }
 export default config

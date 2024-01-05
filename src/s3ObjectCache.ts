@@ -64,7 +64,8 @@ export class S3ObjectCache implements ObjectCache {
       .send(new GetObjectCommand(bucketAndKey))
       .then(async (x) => ({ Body: await x.Body!.transformToByteArray(), LastModified: x.LastModified, ContentType: x.ContentType }))
       .catch(() => undefined)
-    const expired = staleAfterSeconds && existingCache && (+new Date() - +existingCache.LastModified!) / 1000 > staleAfterSeconds
+    const expired =
+      staleAfterSeconds !== undefined && existingCache && (+new Date() - +existingCache.LastModified!) / 1000 > staleAfterSeconds
 
     if (mimeType === undefined) {
       mimeType = existingCache?.ContentType ?? 'application/octet-stream'
