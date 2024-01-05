@@ -37,7 +37,21 @@ const cache =
         'optional/cache/prefix',
       )
 
-await cache
+for (let i =0; i < 10; i++>) {
+  const value = await cache.getAndCache('test', async (existing: {test: number} | undefined) => {
+    await new Promise(resolve => setTimeout(resolve, 100))
+    const e = existing ?? {test: 1}
+    e.test++
+    return e
+  }, {
+    staleAfterSeconds: 1
+  })
+  console.log(value)
+  await new Promise(resolve => setTimeout(resolve, 500))
+}
+
+await cache.put('test', {test: 100})
+
 ```
 
 ---
