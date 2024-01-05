@@ -1,0 +1,12 @@
+{
+  "entryPoints": ["src/"],
+  "entryPointStrategy": "expand",
+  "out": "code-docs",
+  "plugin": ["typedoc-plugin-markdown"],
+  "theme": "default",
+  "cleanOutputDir": true,
+  "githubPages": false,
+  "readme": "none",
+  "entryDocument": "code-docs.md",
+  "publicPath": "/"
+}
