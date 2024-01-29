@@ -1,6 +1,9 @@
 {
   "name": "@makerx/node-cache",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.0.1",
   "description": "A NodeJS package that makes it easy to cache objects and files locally and in AWS",
   "keywords": [
