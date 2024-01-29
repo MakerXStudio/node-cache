@@ -8,14 +8,8 @@
 
 ## Install
 
-Ensure you are authenticated to the [GitHub package repository with your PAT](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) and add an `.npmrc` with the below contents:
-
-```
-@makerxstudio:registry=https://npm.pkg.github.com
-```
-
 ```bash
-npm install @makerxstudio/node-cache
+npm install @makerx/node-cache
 ```
 
 ## Usage
@@ -24,7 +18,7 @@ The primary purpose of this package is to make it easy to cache objects and file
 
 ```typescript
 import { S3 } from '@aws-sdk/client-s3'
-import { FileSystemObjectCache, S3ObjectCache } from '@makerxstudio/node-cache'
+import { FileSystemObjectCache, S3ObjectCache } from '@makerx/node-cache'
 
 const cache =
   process.env.CACHE_BUCKET_NAME === 'local'

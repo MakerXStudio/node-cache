@@ -1,8 +1,6 @@
 {
-  "name": "@makerxstudio/node-cache",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
+  "name": "@makerx/node-cache",
+  "private": false,
   "version": "0.0.1",
   "description": "A NodeJS package that makes it easy to cache objects and files locally and in AWS",
   "keywords": [
