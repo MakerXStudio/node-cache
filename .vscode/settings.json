@@ -5,9 +5,7 @@
     "source.fixAll.eslint": "explicit"
   },
   "jest.outputConfig": { "revealWithFocus": "none" },
-  "jest.autoRun": {
-    "watch": false,
-    "onSave": "test-file",
-    "onStartup": false
+  "jest.runMode": {
+    "type": "on-save"
   }
 }
