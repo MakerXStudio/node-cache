@@ -26,7 +26,6 @@ export class FileSystemObjectCache implements ObjectCache {
   /** Adds the given value to the cache for the given cache key
    * @param cacheKey A unique key that identifies the cached value
    * @param data The data to cache
-   * @param mimeType Optional mime type of the data; default = `application/json` or `application/octet-stream` depending on if the data is binary or JSON.
    */
   async put<T>(cacheKey: string, data: T): Promise<void> {
     const cachePath = path.join(this.cacheDirectory, data instanceof Uint8Array ? cacheKey : `${cacheKey}.json`)
@@ -140,9 +139,8 @@ export class FileSystemObjectCache implements ObjectCache {
   /** Adds the given binary value to the cache for the given cache key
    * @param cacheKey A unique key that identifies the cached value
    * @param data The binary data to cache
-   * @param mimeType Optional mime type of the data; default = `application/json` or `application/octet-stream` depending on if the data is binary or JSON.
    */
-  putBinary(cacheKey: string, data: Uint8Array, mimeType?: string): Promise<void> {
-    return this.putBinary(cacheKey, data, mimeType)
+  putBinary(cacheKey: string, data: Uint8Array): Promise<void> {
+    return this.put(cacheKey, data)
   }
 }
