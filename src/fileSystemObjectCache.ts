@@ -23,6 +23,17 @@ export class FileSystemObjectCache implements ObjectCache {
     }
   }
 
+  /**
+   * Clear the cache value for te given cache key
+   * @param cacheKey A unique key that identifies the cached value
+   */
+  async clearCache(cacheKey: string): Promise<void> {
+    if (fsSync.existsSync(path.join(this.cacheDirectory, cacheKey))) await fs.unlink(path.join(this.cacheDirectory, cacheKey))
+
+    if (fsSync.existsSync(path.join(this.cacheDirectory, `${cacheKey}.json`)))
+      await fs.unlink(path.join(this.cacheDirectory, `${cacheKey}.json`))
+  }
+
   /** Adds the given value to the cache for the given cache key
    * @param cacheKey A unique key that identifies the cached value
    * @param data The data to cache
