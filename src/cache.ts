@@ -59,7 +59,7 @@ export interface ObjectCache {
   putBinary(cacheKey: string, data: Uint8Array, mimeType?: string): Promise<void>
 
   /**
-   * Clear the cache value for te given cache key
+   * Clear the cache value for the given cache key
    * @param cacheKey A unique key that identifies the cached value
    */
   clearCache(cacheKey: string): void
