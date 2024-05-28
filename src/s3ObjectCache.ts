@@ -47,8 +47,8 @@ export class S3ObjectCache implements ObjectCache {
       }
     }
 
-    deleteFile(this.keyPrefix ? path.join(this.keyPrefix, `${cacheKey}.gz`) : `${cacheKey}.gz`)
-    deleteFile(this.keyPrefix ? path.join(this.keyPrefix, `${cacheKey}.json.gz`) : `${cacheKey}.json.gz`)
+    await deleteFile(this.keyPrefix ? path.join(this.keyPrefix, `${cacheKey}.gz`) : `${cacheKey}.gz`)
+    await deleteFile(this.keyPrefix ? path.join(this.keyPrefix, `${cacheKey}.json.gz`) : `${cacheKey}.json.gz`)
   }
 
   /** Adds the given value to the cache for the given cache key
