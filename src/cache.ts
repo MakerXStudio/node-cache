@@ -57,4 +57,10 @@ export interface ObjectCache {
    * @param mimeType Optional mime type of the data; default = `application/json` or `application/octet-stream` depending on if the data is binary or JSON.
    */
   putBinary(cacheKey: string, data: Uint8Array, mimeType?: string): Promise<void>
+
+  /**
+   * Clear the cache value for the given cache key
+   * @param cacheKey A unique key that identifies the cached value
+   */
+  clearCache(cacheKey: string): void
 }

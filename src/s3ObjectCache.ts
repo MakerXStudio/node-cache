@@ -1,4 +1,4 @@
-import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { BinaryCacheOptions, BinaryWithMetadata, CacheOptions, ObjectCache } from './cache'
 import * as path from 'node:path'
 
@@ -20,6 +20,35 @@ export class S3ObjectCache implements ObjectCache {
     this.s3Client = s3Client
     this.bucket = bucket
     this.keyPrefix = keyPrefix
+  }
+
+  /**
+   * Clear the cache value for te given cache key
+   * @param cacheKey A unique key that identifies the cached value
+   */
+  async clearCache(cacheKey: string): Promise<void> {
+    const deleteFile = async (key: string) => {
+      const bucketAndKey = {
+        Bucket: this.bucket,
+        Key: key,
+      }
+
+      const fileExist = await this.s3Client
+        .send(new HeadObjectCommand(bucketAndKey))
+        .then(() => true)
+        .catch(() => false)
+
+      if (fileExist) {
+        await this.s3Client.send(
+          new DeleteObjectCommand({
+            ...bucketAndKey,
+          }),
+        )
+      }
+    }
+
+    await deleteFile(this.keyPrefix ? path.join(this.keyPrefix, `${cacheKey}.gz`) : `${cacheKey}.gz`)
+    await deleteFile(this.keyPrefix ? path.join(this.keyPrefix, `${cacheKey}.json.gz`) : `${cacheKey}.json.gz`)
   }
 
   /** Adds the given value to the cache for the given cache key

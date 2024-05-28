@@ -1,6 +1,7 @@
 import { describe, beforeEach, test } from '@jest/globals'
 import path from 'node:path'
 import * as fs from 'node:fs/promises'
+import * as fsSync from 'node:fs'
 import { FileSystemObjectCache } from './fileSystemObjectCache'
 
 const testDir = path.join(__dirname, '..', '.cache')
@@ -28,6 +29,37 @@ describe('FileSystemObjectCache', () => {
         "test": 1
       }"
     `)
+  })
+
+  test('Clear json file cache', async () => {
+    const cache = new FileSystemObjectCache(testDir, true)
+
+    await cache.put('test', { test: 1 })
+
+    const data = await fs.readFile(path.join(testDir, 'test.json'), { encoding: 'utf-8' })
+    expect(data).toMatchInlineSnapshot(`
+      "{
+        "test": 1
+      }"
+    `)
+
+    await cache.clearCache('test')
+    const fileExist = fsSync.existsSync(path.join(testDir, 'test.json'))
+    expect(fileExist).toBe(false)
+  })
+
+  test('Clear binary cache', async () => {
+    const cache = new FileSystemObjectCache(testDir, true)
+    const fileData = Uint8Array.from(atob('test'), (c) => c.charCodeAt(0))
+
+    await cache.put('test', fileData)
+
+    const data = await fs.readFile(path.join(testDir, 'test'))
+    expect(data.compare(fileData)).toBe(0)
+
+    await cache.clearCache('test')
+    const fileExist = fsSync.existsSync(path.join(testDir, 'test'))
+    expect(fileExist).toBe(false)
   })
 
   test("Get an object from cache if it didn't exist", async () => {
